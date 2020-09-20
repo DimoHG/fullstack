@@ -10,7 +10,7 @@ public class HelloWorld
 	@RequestMapping("/")
 	public String index()
 	{
-		return "AGG";
+		return "Hello";
 	}
 }
 

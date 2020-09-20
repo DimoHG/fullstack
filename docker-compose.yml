@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    ports:
+      - "5432:5432"
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar

@@ -1,6 +1,5 @@
 FROM openjdk:11
-VOLUME /tmp
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar","/app.jar"]
+RUN mkdir -p /app/
+RUN mkdir -p /app/logs/
+ADD build/libs/server-0.0.1-SNAPSHOT.jar /app/app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container", "-jar", "/app/app.jar"]
