@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 
 @RestController
@@ -24,11 +25,19 @@ public class ExposeTest
 		return "Done";
 	}
 
+	@RequestMapping(value = "addRandom", method = RequestMethod.GET)
+	public String addRandom()
+	{
+		Random random = new Random();
+		double a = random.nextInt();
+		todoRepository.save(new Todo("random" + a, "random" + a));
+		return "" + a;
+	}
+
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	public List<Todo> getAll()
 	{
 		return todoRepository.findAll();
 	}
-
 
 }
