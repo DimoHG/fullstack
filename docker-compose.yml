@@ -4,13 +4,17 @@ services:
   postgres:
     image: 'postgres:latest'
     ports:
-      - "5432:5432"
+      - "8081:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
     ports:
       - "8080:8080"
     depends_on:
       - postgres
-    command: java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /usr/app/app.jar

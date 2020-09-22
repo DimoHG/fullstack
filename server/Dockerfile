@@ -1,5 +1,5 @@
 FROM openjdk:11
-RUN mkdir -p /app/
-RUN mkdir -p /app/logs/
-ADD build/libs/server-0.0.1-SNAPSHOT.jar /app/app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container", "-jar", "/app/app.jar"]
+ENV APP_HOME=/usr/app/
+WORKDIR $APP_HOME
+COPY ./build/libs/* /usr/app/app.jar
+EXPOSE 8080
