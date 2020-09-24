@@ -5,8 +5,13 @@ services:
     image: 'postgres:latest'
     ports:
       - "8081:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
   server:
     build:
       context: ./server
@@ -15,6 +20,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
     ports:
       - "8080:8080"
+      - "5050:5050"
     depends_on:
       - postgres
-    command: java -Djava.security.egd=file:/dev/./urandom -jar /usr/app/app.jar
+volumes:
+  pgdata:
